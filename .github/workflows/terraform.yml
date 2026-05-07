@@ -87,6 +87,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
+
       - name: Terraform init
         run: terraform init
 
