@@ -1,2 +1,2 @@
-resource_group_name = testgtg
-location            = eastus
+resource_group_name = "testgtg"
+location            = "eastus"
