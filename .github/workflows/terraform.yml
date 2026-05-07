@@ -1,0 +1,93 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Terraform module repository
+        uses: actions/checkout@v4
+        with:
+          repository: abhi98211/terraform_module
+          path: terraformModules
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Azure login via OIDC
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform plan
+        run: terraform plan -out=tfplan
+
+      - name: Upload Terraform plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: tfplan
+
+  terraform-apply:
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+    environment: terraform-apply
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Terraform module repository
+        uses: actions/checkout@v4
+        with:
+          repository: abhi98211/terraform_module
+          path: terraformModules
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Download Terraform plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+
+      - name: Azure login via OIDC
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve tfplan
