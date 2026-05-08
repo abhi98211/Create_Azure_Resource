@@ -18,3 +18,10 @@ variable "tags" {
     owner       = "infra-team"
   }
 }
+
+variable "subnets" {
+  type = map(object({
+    name = "string"
+    address_prefixes = list(string)
+  }))
+}

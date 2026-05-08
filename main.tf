@@ -12,15 +12,16 @@ module "virtual_network" {
   address_space       = ["10.0.0.0/16"]
   location            = module.resource_group.resource_group_location
   resource_group_name = module.resource_group.resource_group_name
-  subnets = [{
+  subnets = {
         
-        name  = "example-subnet"
+        example-subnet1 = {
+        name   = "example-subnet1"
         address_prefixes = ["10.0.1.0/24"]
-        },
-        {
+        }
+        example-subnet2 = {
         name   = "example-subnet2"
         address_prefixes = ["10.0.2.0/24"]
         }
-  ]
+    }
 }
 
