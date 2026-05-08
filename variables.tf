@@ -21,7 +21,7 @@ variable "tags" {
 
 variable "subnets" {
   type = map(object({
-    name = "string"
+    name = string
     address_prefixes = list(string)
   }))
 }
