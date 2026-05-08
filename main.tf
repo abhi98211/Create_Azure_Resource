@@ -3,7 +3,7 @@ module "resource_group" {
   name     = var.resource_group_name
   location = var.location
   //tags     = var.tags
-  
+
 }
 
 module "virtual_network" {
@@ -15,11 +15,11 @@ module "virtual_network" {
   subnets = [{
         
         name  = "example-subnet"
-        address_prefix = ["10.0.1.0/24"]
+        address_prefixs = ["10.0.1.0/24"]
         },
         {
         name   = "example-subnet2"
-        address_prefix = ["10.0.2.0/24"]
+        address_prefixs = ["10.0.2.0/24"]
         }
   ]
 }
