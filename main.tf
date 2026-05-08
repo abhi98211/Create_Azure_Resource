@@ -6,12 +6,12 @@ module "resource_group" {
 
 }
 
-# module "virtual_network" {
-#   source              = "./terraformModules/modules/Vnet"
-#   vnet_name           = "example-vnet"
-#   address_space       = ["10.0.0.0/16"]
-#   location            = module.resource_group.resource_group_location
-#   resource_group_name = module.resource_group.resource_group_name
-#   subnets = var.subnets
-# }
+module "virtual_network" {
+  source              = "./terraformModules/modules/Vnet"
+  vnet_name           = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = module.resource_group.resource_group_location
+  resource_group_name = module.resource_group.resource_group_name
+  subnets = var.subnets
+}
 
