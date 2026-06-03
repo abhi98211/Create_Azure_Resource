@@ -27,9 +27,7 @@ jobs:
           repository: abhi98211/terraform_module
           path: terraformModules
           token: ${{ secrets.GH_PAT }}
-          ref: refs/tags/v1.0.0
-          fetch-depth: 0
-          fetch-tags: true
+          ref: v.1.0.0
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
