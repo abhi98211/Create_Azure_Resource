@@ -27,7 +27,7 @@ jobs:
           repository: abhi98211/terraform_module
           path: terraformModules
           token: ${{ secrets.GH_PAT }}
-          ref: v1.0.0
+          ref: refs/tags/v1.0.0
           fetch-depth: 0
           fetch-tags: true
 
