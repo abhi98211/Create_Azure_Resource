@@ -28,6 +28,7 @@ jobs:
           path: terraformModules
           token: ${{ secrets.GH_PAT }}
           ref: v1.0.0
+          fetch-depth: 0
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
